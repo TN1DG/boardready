@@ -1,0 +1,3762 @@
+{
+ "run_id": "demo",
+ "month": "2026-09",
+ "org_name": "Hackathon - R3CON Tech",
+ "accounting_software": "xero",
+ "readiness": {
+  "pct": 97.0,
+  "needs_review_n": 6,
+  "payments_n": 203,
+  "no_evidence_n": 188,
+  "approved_n": 1,
+  "pct_after": 97.5
+ },
+ "verification": {
+  "verified_n": 53,
+  "total_n": 53,
+  "sense_checks": [
+   {
+    "name": "Category spend adds up to total spend",
+    "ok": true,
+    "detail": "categories 162,333.84 vs total 162,333.84"
+   },
+   {
+    "name": "Every query's date range matches the window",
+    "ok": true,
+    "detail": "window 2026-06-01 to 2026-10-01 (M=2026-09); all match"
+   },
+   {
+    "name": "Agent used exactly the planned arguments",
+    "ok": true,
+    "detail": "19/19 calls exact"
+   }
+  ]
+ },
+ "metrics": {
+  "spend_total_m": {
+   "value": 162333.84,
+   "unit": "GBP",
+   "label": "Total spend 2026-09",
+   "display": "\u00a3162,334",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-06-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "spend_total"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "spend_total_prior_avg": {
+   "value": 132514.46,
+   "unit": "GBP",
+   "label": "Avg monthly spend, prior 3 months",
+   "display": "\u00a3132,514",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-06-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "spend_total"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "spend_total_change_abs": {
+   "value": 29819.38,
+   "unit": "GBP",
+   "label": "Spend change vs prior avg",
+   "display": "\u00a329,819",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-06-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "spend_total"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "spend_total_change_pct": {
+   "value": 22.5,
+   "unit": "pct",
+   "label": "Spend change % vs prior avg",
+   "display": "+22.5%",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-06-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "spend_total"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_payroll_benefits_m": {
+   "value": 69000,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Payroll & Benefits spend 2026-09",
+   "display": "\u00a369,000",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_payroll_benefits_prior_avg": {
+   "value": 57333.33,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Payroll & Benefits avg, prior 3 months",
+   "display": "\u00a357,333",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_payroll_benefits_change_abs": {
+   "value": 11666.67,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Payroll & Benefits change",
+   "display": "\u00a311,667",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_payroll_benefits_change_pct": {
+   "value": 20.3,
+   "unit": "pct",
+   "label": "Operating Expenses \u203a Payroll & Benefits change %",
+   "display": "+20.3%",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_subscriptions_m": {
+   "value": 8847.59,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Subscriptions spend 2026-09",
+   "display": "\u00a38,848",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_subscriptions_prior_avg": {
+   "value": 4608.23,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Subscriptions avg, prior 3 months",
+   "display": "\u00a34,608",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_subscriptions_change_abs": {
+   "value": 4239.36,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Subscriptions change",
+   "display": "\u00a34,239",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_subscriptions_change_pct": {
+   "value": 92.0,
+   "unit": "pct",
+   "label": "Operating Expenses \u203a Subscriptions change %",
+   "display": "+92.0%",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_rent_m": {
+   "value": 6750,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Rent spend 2026-09",
+   "display": "\u00a36,750",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_rent_prior_avg": {
+   "value": 2350.0,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Rent avg, prior 3 months",
+   "display": "\u00a32,350",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_rent_change_abs": {
+   "value": 4400.0,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Rent change",
+   "display": "\u00a34,400",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_rent_change_pct": {
+   "value": 187.2,
+   "unit": "pct",
+   "label": "Operating Expenses \u203a Rent change %",
+   "display": "+187.2%",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_legal_professional_fe_m": {
+   "value": 7940,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Legal & Professional Fees spend 2026-09",
+   "display": "\u00a37,940",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_legal_professional_fe_prior_avg": {
+   "value": 5700.0,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Legal & Professional Fees avg, prior 3 months",
+   "display": "\u00a35,700",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_legal_professional_fe_change_abs": {
+   "value": 2240.0,
+   "unit": "GBP",
+   "label": "Operating Expenses \u203a Legal & Professional Fees change",
+   "display": "\u00a32,240",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_operating_expenses_legal_professional_fe_change_pct": {
+   "value": 39.3,
+   "unit": "pct",
+   "label": "Operating Expenses \u203a Legal & Professional Fees change %",
+   "display": "+39.3%",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_financial_items_capital_investments_m": {
+   "value": 4774.8,
+   "unit": "GBP",
+   "label": "Financial Items \u203a Capital Investments spend 2026-09",
+   "display": "\u00a34,775",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_financial_items_capital_investments_prior_avg": {
+   "value": 1516.67,
+   "unit": "GBP",
+   "label": "Financial Items \u203a Capital Investments avg, prior 3 months",
+   "display": "\u00a31,517",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_financial_items_capital_investments_change_abs": {
+   "value": 3258.13,
+   "unit": "GBP",
+   "label": "Financial Items \u203a Capital Investments change",
+   "display": "\u00a33,258",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cat_financial_items_capital_investments_change_pct": {
+   "value": 214.8,
+   "unit": "pct",
+   "label": "Financial Items \u203a Capital Investments change %",
+   "display": "+214.8%",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "cash": {
+   "value": 2459109.84,
+   "unit": "GBP",
+   "label": "Current cash (eligible)",
+   "display": "\u00a32,459,110",
+   "source": {
+    "tool": "query_accounts",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "limit": 100
+    }
+   }
+  },
+  "burn_gross_m": {
+   "value": -162333.84,
+   "unit": "GBP",
+   "label": "Gross burn 2026-09 (Seapoint saved mode)",
+   "display": "-\u00a3162,334",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "date": {
+       "gte": "2026-06-01",
+       "lt": "2026-10-01"
+      },
+      "not": {
+       "status": [
+        "FAILED",
+        "CANCELLED",
+        "FULL_REVERSAL"
+       ]
+      },
+      "or": [
+       {
+        "direction": "debit"
+       },
+       {
+        "direction": "credit",
+        "type": [
+         "REFUND",
+         "CARD_REFUND",
+         "CARD_CHARGEBACK"
+        ]
+       }
+      ]
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "direction"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "burn_out"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "burn_net_m": {
+   "value": -122503.84,
+   "unit": "GBP",
+   "label": "Net burn 2026-09",
+   "display": "-\u00a3122,504",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "date": {
+       "gte": "2026-06-01",
+       "lt": "2026-10-01"
+      },
+      "direction": "credit",
+      "not": {
+       "status": [
+        "FAILED",
+        "CANCELLED",
+        "FULL_REVERSAL"
+       ]
+      },
+      "and": [
+       {
+        "not": {
+         "type": [
+          "REFUND",
+          "CARD_REFUND",
+          "CARD_CHARGEBACK"
+         ]
+        }
+       }
+      ]
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "burn_in"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "revenue_m": {
+   "value": 39830.0,
+   "unit": "GBP",
+   "label": "Revenue credits 2026-09",
+   "display": "\u00a339,830",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "date": {
+       "gte": "2026-06-01",
+       "lt": "2026-10-01"
+      },
+      "direction": "credit",
+      "not": {
+       "status": [
+        "FAILED",
+        "CANCELLED",
+        "FULL_REVERSAL"
+       ]
+      },
+      "and": [
+       {
+        "not": {
+         "type": [
+          "REFUND",
+          "CARD_REFUND",
+          "CARD_CHARGEBACK"
+         ]
+        }
+       }
+      ]
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "burn_in"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "burn_gross_prior_avg": {
+   "value": -132514.46,
+   "unit": "GBP",
+   "label": "Gross burn, prior 3-month avg",
+   "display": "-\u00a3132,514",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "date": {
+       "gte": "2026-06-01",
+       "lt": "2026-10-01"
+      },
+      "not": {
+       "status": [
+        "FAILED",
+        "CANCELLED",
+        "FULL_REVERSAL"
+       ]
+      },
+      "or": [
+       {
+        "direction": "debit"
+       },
+       {
+        "direction": "credit",
+        "type": [
+         "REFUND",
+         "CARD_REFUND",
+         "CARD_CHARGEBACK"
+        ]
+       }
+      ]
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "direction"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "burn_out"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "runway_months": {
+   "value": 20.1,
+   "unit": "months",
+   "label": "Runway months (cash / |net burn|)",
+   "display": "20.1 months",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "date": {
+       "gte": "2026-06-01",
+       "lt": "2026-10-01"
+      },
+      "direction": "credit",
+      "not": {
+       "status": [
+        "FAILED",
+        "CANCELLED",
+        "FULL_REVERSAL"
+       ]
+      },
+      "and": [
+       {
+        "not": {
+         "type": [
+          "REFUND",
+          "CARD_REFUND",
+          "CARD_CHARGEBACK"
+         ]
+        }
+       }
+      ]
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "burn_in"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   }
+  },
+  "payments_n": {
+   "value": 203,
+   "unit": "count",
+   "label": "payments count",
+   "display": "203",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "amount": {
+       "gt": 0
+      },
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "aggregate": {
+      "metrics": [
+       {
+        "function": "count",
+        "as": "payments_n"
+       }
+      ]
+     }
+    }
+   }
+  },
+  "needs_review_n": {
+   "value": 6,
+   "unit": "count",
+   "label": "needs review count",
+   "display": "6",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "amount": {
+       "gt": 0
+      },
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      },
+      "or": [
+       {
+        "reconciliation": "needs_review"
+       },
+       {
+        "reconciliation": {
+         "is_null": true
+        },
+        "has_evidence": false
+       }
+      ]
+     },
+     "aggregate": {
+      "metrics": [
+       {
+        "function": "count",
+        "as": "needs_review_n"
+       }
+      ]
+     }
+    }
+   }
+  },
+  "no_evidence_n": {
+   "value": 188,
+   "unit": "count",
+   "label": "no evidence count",
+   "display": "188",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "amount": {
+       "gt": 0
+      },
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      },
+      "has_evidence": false
+     },
+     "aggregate": {
+      "metrics": [
+       {
+        "function": "count",
+        "as": "no_evidence_n"
+       }
+      ]
+     }
+    }
+   }
+  },
+  "readiness_pct": {
+   "value": 97.0,
+   "unit": "pct",
+   "label": "Ready for accountant %",
+   "display": "97.0%",
+   "source": {
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "amount": {
+       "gt": 0
+      },
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      },
+      "or": [
+       {
+        "reconciliation": "needs_review"
+       },
+       {
+        "reconciliation": {
+         "is_null": true
+        },
+        "has_evidence": false
+       }
+      ]
+     },
+     "aggregate": {
+      "metrics": [
+       {
+        "function": "count",
+        "as": "needs_review_n"
+       }
+      ]
+     }
+    }
+   }
+  }
+ },
+ "changes": [
+  {
+   "metric": "cat_operating_expenses_payroll_benefits",
+   "label": "Operating Expenses \u203a Payroll & Benefits",
+   "value_m": 69000,
+   "prior_avg": 57333.33,
+   "change_abs": 11666.67,
+   "change_pct": 20.3,
+   "source": {
+    "tool_use_id": "toolu_01DPEBNpKUuxNogR783KnwUU",
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   },
+   "cause": "Isla Fraser, Priya Chandra and Rhys Owen were each paid salary twice in the month: once mid-month and again on the usual payday. This may be a duplicate run or an off-cycle payment. There was also a one-off recruitment placement fee to Fathom Talent Partners, a new kind of cost for this category. The Remote People contractor payroll ran as normal.",
+   "cause_unverified": [],
+   "evidence": [
+    {
+     "id": "txn_2fv2t5mn600zq2kxj67amjfjpt",
+     "date": "2026-09-18",
+     "name": "Isla Fraser",
+     "amount": 4350
+    },
+    {
+     "id": "txn_68sz1z83tvezq4zpsxwtca75js",
+     "date": "2026-09-25",
+     "name": "Isla Fraser",
+     "amount": 4350
+    },
+    {
+     "id": "txn_1bhm4zy5ssnp9ry7e3d3zk6br3",
+     "date": "2026-09-18",
+     "name": "Priya Chandra",
+     "amount": 3550
+    },
+    {
+     "id": "txn_64mynswrb5sfn41gegskas37f9",
+     "date": "2026-09-25",
+     "name": "Priya Chandra",
+     "amount": 3550
+    },
+    {
+     "id": "txn_24kh8n2vzpthpq6j2ewgrc9z7h",
+     "date": "2026-09-18",
+     "name": "Rhys Owen",
+     "amount": 3900
+    },
+    {
+     "id": "txn_5e1anvnn6n9fx0q5ryc33wpxtd",
+     "date": "2026-09-25",
+     "name": "Rhys Owen",
+     "amount": 3900
+    },
+    {
+     "id": "txn_3cp2kc2z7z9cvsmda4qj2jg828",
+     "date": "2026-09-17",
+     "name": "Fathom Talent Partners",
+     "amount": 13400
+    },
+    {
+     "id": "txn_5ktp90hbtte59cea5apn2084kx",
+     "date": "2026-09-25",
+     "name": "Remote People Ltd",
+     "amount": 32000
+    }
+   ]
+  },
+  {
+   "metric": "cat_operating_expenses_rent",
+   "label": "Operating Expenses \u203a Rent",
+   "value_m": 6750,
+   "prior_avg": 2350.0,
+   "change_abs": 4400.0,
+   "change_pct": 187.2,
+   "source": {
+    "tool_use_id": "toolu_01DPEBNpKUuxNogR783KnwUU",
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   },
+   "cause": "The usual monthly WeWork desk payment went out at the start of the month as before. Two more identical WeWork desk-rental direct debits were then taken on the same day mid-month. This is either extra desks being added or a duplicate charge to dispute with WeWork.",
+   "cause_unverified": [],
+   "evidence": [
+    {
+     "id": "txn_0apy93s8rhe3j7ac635bmk601r",
+     "date": "2026-09-01",
+     "name": "WeWork",
+     "amount": 2350
+    },
+    {
+     "id": "txn_786ch3whhs55x3qqbqgr6a2njy",
+     "date": "2026-09-14",
+     "name": "WeWork",
+     "amount": 2200
+    },
+    {
+     "id": "txn_1f41yqyzcz0wagf7evch87maps",
+     "date": "2026-09-14",
+     "name": "WeWork",
+     "amount": 2200
+    }
+   ]
+  },
+  {
+   "metric": "cat_operating_expenses_subscriptions",
+   "label": "Operating Expenses \u203a Subscriptions",
+   "value_m": 8847.59,
+   "prior_avg": 4608.23,
+   "change_abs": 4239.36,
+   "change_pct": 92.0,
+   "source": {
+    "tool_use_id": "toolu_01DPEBNpKUuxNogR783KnwUU",
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   },
+   "cause": "A new JetBrains All Products licence was bought and coded to prepayments, so it looks like an annual upfront purchase. A new BCS membership and a BCS learning charge were added. Figma charged its organisation plan several times plus extra professional seats, which may be duplicate billing. Sentry stays a large recurring cost.",
+   "cause_unverified": [],
+   "evidence": [
+    {
+     "id": "txn_3k13d8z5m6hsey1pknkjx1d36y",
+     "date": "2026-09-12",
+     "name": "JetBrains",
+     "amount": 1990
+    },
+    {
+     "id": "txn_3rnh01qmh0cdq8wr7aeg8wss63",
+     "date": "2026-09-15",
+     "name": "BCS, The Chartered Institute for IT",
+     "amount": 395
+    },
+    {
+     "id": "txn_6db395ces6pf8h95q9j9xn24n0",
+     "date": "2026-09-15",
+     "name": "BCS, The Chartered Institute for IT",
+     "amount": 395
+    },
+    {
+     "id": "txn_0swsyvn1bpgs0tgsje6370gx90",
+     "date": "2026-09-11",
+     "name": "Figma",
+     "amount": 612
+    },
+    {
+     "id": "txn_5zsrzrmpdeeag5sxfg3kb37rxj",
+     "date": "2026-09-18",
+     "name": "Figma",
+     "amount": 612
+    },
+    {
+     "id": "txn_3dh2wthf201j9hd3hwxrpvvzwr",
+     "date": "2026-09-18",
+     "name": "Figma",
+     "amount": 612
+    },
+    {
+     "id": "txn_22yj2wqqf0ckgv9snrgjby36d1",
+     "date": "2026-09-26",
+     "name": "Figma",
+     "amount": 144
+    },
+    {
+     "id": "txn_4t9rq8v6trpdy9sw04z290anpy",
+     "date": "2026-09-05",
+     "name": "Sentry",
+     "amount": 2800
+    }
+   ]
+  },
+  {
+   "metric": "cat_financial_items_capital_investments",
+   "label": "Financial Items \u203a Capital Investments",
+   "value_m": 4774.8,
+   "prior_avg": 1516.67,
+   "change_abs": 3258.13,
+   "change_pct": 214.8,
+   "source": {
+    "tool_use_id": "toolu_01DPEBNpKUuxNogR783KnwUU",
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   },
+   "cause": "There were one-off equipment purchases from two new vendors: computer hardware from the Apple Store and ergonomic office equipment from Posturite. Both have receipts and are coded to fixed-asset accounts.",
+   "cause_unverified": [],
+   "evidence": [
+    {
+     "id": "txn_6r4gcnx3bs99a33m3bqc71ex41",
+     "date": "2026-09-16",
+     "name": "Apple Store",
+     "amount": 2398.8
+    },
+    {
+     "id": "txn_0va5g7ysd6rrx565szkpzbgyvf",
+     "date": "2026-09-21",
+     "name": "Posturite",
+     "amount": 2376
+    }
+   ]
+  },
+  {
+   "metric": "cat_operating_expenses_legal_professional_fe",
+   "label": "Operating Expenses \u203a Legal & Professional Fees",
+   "value_m": 7940,
+   "prior_avg": 5700.0,
+   "change_abs": 2240.0,
+   "change_pct": 39.3,
+   "source": {
+    "tool_use_id": "toolu_01DPEBNpKUuxNogR783KnwUU",
+    "tool": "query_transactions",
+    "input": {
+     "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+     "where": {
+      "status": "BOOKED",
+      "direction": "debit",
+      "date": {
+       "gte": "2026-09-01",
+       "lt": "2026-10-01"
+      }
+     },
+     "include_excluded_from_runway": false,
+     "aggregate": {
+      "group_by": [
+       {
+        "field": "date",
+        "interval": "month"
+       },
+       {
+        "field": "category_id"
+       }
+      ],
+      "metrics": [
+       {
+        "function": "sum",
+        "field": "reporting_amount",
+        "as": "cat_spend"
+       },
+       {
+        "function": "count",
+        "as": "cat_n"
+       }
+      ]
+     },
+     "limit": 100
+    }
+   },
+   "cause": "Harrison & Webb Solicitors billed well above their usual monthly level. A new professional indemnity insurance renewal from Meridian Insurance Brokers also landed in this category, though it really belongs under Insurance. Connolly Accountants' bookkeeping fee was unchanged.",
+   "cause_unverified": [],
+   "evidence": [
+    {
+     "id": "txn_3t1bn9q41f6stvz4m61st3d7e1",
+     "date": "2026-09-20",
+     "name": "Harrison & Webb Solicitors",
+     "amount": 4900
+    },
+    {
+     "id": "txn_31f1k1xm85k3mqs6p2yjn0mpne",
+     "date": "2026-09-23",
+     "name": "Meridian Insurance Brokers",
+     "amount": 1240
+    },
+    {
+     "id": "txn_55zexwx5q366qfxj1px8vq7fd9",
+     "date": "2026-09-12",
+     "name": "Connolly Accountants",
+     "amount": 1800
+    }
+   ]
+  }
+ ],
+ "new_vendors": [
+  {
+   "id": "ven_45jpr9ydvhpng3rapp40w3gbwe",
+   "label": "Apple Store",
+   "metric": "ven_apple_store",
+   "value_m": 2398.8,
+   "prior_avg": 0.0,
+   "change_abs": 2398.8,
+   "change_pct": null,
+   "prior_any": false
+  },
+  {
+   "id": "ven_0strmzre8ndsm0e4zntktbkxe6",
+   "label": "Posturite",
+   "metric": "ven_posturite",
+   "value_m": 2376,
+   "prior_avg": 0.0,
+   "change_abs": 2376.0,
+   "change_pct": null,
+   "prior_any": false
+  },
+  {
+   "id": "ven_7cjcknkr392ej797z43tnrjwr9",
+   "label": "JetBrains",
+   "metric": "ven_jetbrains",
+   "value_m": 1990,
+   "prior_avg": 0.0,
+   "change_abs": 1990.0,
+   "change_pct": null,
+   "prior_any": false
+  },
+  {
+   "id": "ven_1aa531g8a4bd4r0fnek2z55xzs",
+   "label": "Meridian Insurance Brokers",
+   "metric": "ven_meridian_insurance_brokers",
+   "value_m": 1240,
+   "prior_avg": 0.0,
+   "change_abs": 1240.0,
+   "change_pct": null,
+   "prior_any": false
+  },
+  {
+   "id": "ven_6xzdd0257cwj4s6484y88203hh",
+   "label": "BCS, The Chartered Institute for IT",
+   "metric": "ven_bcs_the_chartered_institute_for_it",
+   "value_m": 790,
+   "prior_avg": 0.0,
+   "change_abs": 790.0,
+   "change_pct": null,
+   "prior_any": false
+  }
+ ],
+ "exceptions": [
+  {
+   "transaction_id": "txn_3mmnzdsz3m7xy3pg5gy5wgcwws",
+   "date": "2026-09-25",
+   "name": "Pinnacle Office Supplies",
+   "description": "PINNACLE OFFICE SUPPLIES - print order",
+   "amount": 318.55,
+   "has_evidence": true,
+   "reconciliation": "synced",
+   "category": "Operating Expenses \u203a Office Expenses",
+   "issue": "needs coding",
+   "proposed_fix": {
+    "account_code": "461",
+    "tax_rate_code": "INPUT2",
+    "account_name": "Printing & Stationery",
+    "tax_rate_name": "20% (VAT on Expenses)"
+   },
+   "question_for_team": "Hi team, the Pinnacle Office Supplies print order of \u00a3318.55 on 2026-09-25 has a receipt. Can we code it to Printing & Stationery at 20% VAT and approve it?",
+   "question_unverified": [
+    "20%"
+   ],
+   "status": "approved",
+   "change_id": "0993b27a8c86"
+  },
+  {
+   "transaction_id": "txn_31f1k1xm85k3mqs6p2yjn0mpne",
+   "date": "2026-09-23",
+   "name": "Meridian Insurance Brokers",
+   "description": "MERIDIAN INSURANCE BROKERS - PI renewal",
+   "amount": 1240,
+   "has_evidence": false,
+   "reconciliation": "needs_review",
+   "category": "Operating Expenses \u203a Legal & Professional Fees",
+   "issue": "needs coding, no receipt",
+   "proposed_fix": {
+    "account_code": "433",
+    "tax_rate_code": "EXEMPTEXPENSES",
+    "account_name": "Insurance",
+    "tax_rate_name": "Exempt Expenses"
+   },
+   "question_for_team": "Who handled the Meridian Insurance Brokers PI renewal (\u00a31,240.00, 2026-09-23)? Please upload the invoice or policy schedule. We'll code it to Insurance, VAT exempt.",
+   "question_unverified": [],
+   "status": "open"
+  },
+  {
+   "transaction_id": "txn_1aqnspk0wz2n4c153tg8bnm418",
+   "date": "2026-09-22",
+   "name": "Premier Inn",
+   "description": "PREMIER INN MANCHESTER CITY",
+   "amount": 89,
+   "has_evidence": false,
+   "reconciliation": "needs_review",
+   "category": "Operating Expenses \u203a Travel & Entertainment",
+   "issue": "needs coding, no receipt",
+   "proposed_fix": null,
+   "question_for_team": "Whose Premier Inn Manchester stay was this (\u00a389.00, 2026-09-22)? What was the trip for? Please upload the receipt.",
+   "question_unverified": [],
+   "status": "open"
+  },
+  {
+   "transaction_id": "txn_5se11w6he53mpqdvmnmb45mx26",
+   "date": "2026-09-17",
+   "name": "Currys",
+   "description": "CURRYS PC WORLD 0412",
+   "amount": 62.34,
+   "has_evidence": false,
+   "reconciliation": "needs_review",
+   "category": "Operating Expenses \u203a Office Expenses",
+   "issue": "needs coding, no receipt",
+   "proposed_fix": null,
+   "question_for_team": "What was bought at Currys PC World for \u00a362.34 on 2026-09-17? Is it equipment we should treat as an asset? Please upload the receipt.",
+   "question_unverified": [],
+   "status": "open"
+  },
+  {
+   "transaction_id": "txn_729tg837f840h6p29pdrphsya0",
+   "date": "2026-09-09",
+   "name": "Amazon UK",
+   "description": "AMAZON.CO.UK*2K4LM8QX3",
+   "amount": 47.98,
+   "has_evidence": false,
+   "reconciliation": "needs_review",
+   "category": "Operating Expenses \u203a Office Expenses",
+   "issue": "needs coding, no receipt",
+   "proposed_fix": null,
+   "question_for_team": "Who made the Amazon UK order of \u00a347.98 on 2026-09-09, and what was it for? Please upload the VAT invoice from the Amazon account.",
+   "question_unverified": [],
+   "status": "open"
+  },
+  {
+   "transaction_id": "txn_0mh4z4ph1197y7wjwketesbqhx",
+   "date": "2026-09-02",
+   "name": "Unknown Management Fee Vendor",
+   "description": "Management fee for August",
+   "amount": 180.07,
+   "has_evidence": false,
+   "reconciliation": null,
+   "category": "Operating Expenses \u203a Bank Fees",
+   "issue": "needs coding, no receipt",
+   "proposed_fix": null,
+   "question_for_team": "There's a \u00a3180.07 payment on 2026-09-02 described as a management fee, and we can't match it to a known vendor. Does anyone recognise it? Please share the invoice, or flag it if it shouldn't have been paid.",
+   "question_unverified": [],
+   "status": "open"
+  }
+ ],
+ "update": {
+  "headline": "Burn rose to -\u00a3162,334 (+22.5% vs prior average); cash is \u00a32,459,110, which gives 20.1 months of runway",
+  "headline_segments": [
+   {
+    "text": "Burn rose to ",
+    "unverified": []
+   },
+   {
+    "text": "-\u00a3162,334",
+    "metric": "burn_gross_m",
+    "source": {
+     "tool": "query_transactions",
+     "input": {
+      "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+      "where": {
+       "date": {
+        "gte": "2026-06-01",
+        "lt": "2026-10-01"
+       },
+       "not": {
+        "status": [
+         "FAILED",
+         "CANCELLED",
+         "FULL_REVERSAL"
+        ]
+       },
+       "or": [
+        {
+         "direction": "debit"
+        },
+        {
+         "direction": "credit",
+         "type": [
+          "REFUND",
+          "CARD_REFUND",
+          "CARD_CHARGEBACK"
+         ]
+        }
+       ]
+      },
+      "include_excluded_from_runway": false,
+      "aggregate": {
+       "group_by": [
+        {
+         "field": "date",
+         "interval": "month"
+        },
+        {
+         "field": "direction"
+        }
+       ],
+       "metrics": [
+        {
+         "function": "sum",
+         "field": "reporting_amount",
+         "as": "burn_out"
+        }
+       ]
+      },
+      "limit": 100
+     }
+    }
+   },
+   {
+    "text": " (",
+    "unverified": []
+   },
+   {
+    "text": "+22.5%",
+    "metric": "spend_total_change_pct",
+    "source": {
+     "tool": "query_transactions",
+     "input": {
+      "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+      "where": {
+       "status": "BOOKED",
+       "direction": "debit",
+       "date": {
+        "gte": "2026-06-01",
+        "lt": "2026-10-01"
+       }
+      },
+      "include_excluded_from_runway": false,
+      "aggregate": {
+       "group_by": [
+        {
+         "field": "date",
+         "interval": "month"
+        }
+       ],
+       "metrics": [
+        {
+         "function": "sum",
+         "field": "reporting_amount",
+         "as": "spend_total"
+        }
+       ]
+      },
+      "limit": 100
+     }
+    }
+   },
+   {
+    "text": " vs prior average); cash is ",
+    "unverified": []
+   },
+   {
+    "text": "\u00a32,459,110",
+    "metric": "cash",
+    "source": {
+     "tool": "query_accounts",
+     "input": {
+      "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+      "limit": 100
+     }
+    }
+   },
+   {
+    "text": ", which gives ",
+    "unverified": []
+   },
+   {
+    "text": "20.1 months",
+    "metric": "runway_months",
+    "source": {
+     "tool": "query_transactions",
+     "input": {
+      "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+      "where": {
+       "date": {
+        "gte": "2026-06-01",
+        "lt": "2026-10-01"
+       },
+       "direction": "credit",
+       "not": {
+        "status": [
+         "FAILED",
+         "CANCELLED",
+         "FULL_REVERSAL"
+        ]
+       },
+       "and": [
+        {
+         "not": {
+          "type": [
+           "REFUND",
+           "CARD_REFUND",
+           "CARD_CHARGEBACK"
+          ]
+         }
+        }
+       ]
+      },
+      "include_excluded_from_runway": false,
+      "aggregate": {
+       "group_by": [
+        {
+         "field": "date",
+         "interval": "month"
+        },
+        {
+         "field": "category_id"
+        }
+       ],
+       "metrics": [
+        {
+         "function": "sum",
+         "field": "reporting_amount",
+         "as": "burn_in"
+        }
+       ]
+      },
+      "limit": 100
+     }
+    }
+   },
+   {
+    "text": " of runway",
+    "unverified": []
+   }
+  ],
+  "headline_unverified": [],
+  "sections": [
+   {
+    "title": "Cash & runway",
+    "body_filled": "Cash stands at \u00a32,459,110. Net burn for the month was -\u00a3122,504, after \u00a339,830 of revenue. That gives 20.1 months of runway. Gross burn was -\u00a3162,334, against a prior three-month average of -\u00a3132,514.",
+    "segments": [
+     {
+      "text": "Cash stands at ",
+      "unverified": []
+     },
+     {
+      "text": "\u00a32,459,110",
+      "metric": "cash",
+      "source": {
+       "tool": "query_accounts",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ". Net burn for the month was ",
+      "unverified": []
+     },
+     {
+      "text": "-\u00a3122,504",
+      "metric": "burn_net_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "date": {
+          "gte": "2026-06-01",
+          "lt": "2026-10-01"
+         },
+         "direction": "credit",
+         "not": {
+          "status": [
+           "FAILED",
+           "CANCELLED",
+           "FULL_REVERSAL"
+          ]
+         },
+         "and": [
+          {
+           "not": {
+            "type": [
+             "REFUND",
+             "CARD_REFUND",
+             "CARD_CHARGEBACK"
+            ]
+           }
+          }
+         ]
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "category_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "burn_in"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ", after ",
+      "unverified": []
+     },
+     {
+      "text": "\u00a339,830",
+      "metric": "revenue_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "date": {
+          "gte": "2026-06-01",
+          "lt": "2026-10-01"
+         },
+         "direction": "credit",
+         "not": {
+          "status": [
+           "FAILED",
+           "CANCELLED",
+           "FULL_REVERSAL"
+          ]
+         },
+         "and": [
+          {
+           "not": {
+            "type": [
+             "REFUND",
+             "CARD_REFUND",
+             "CARD_CHARGEBACK"
+            ]
+           }
+          }
+         ]
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "category_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "burn_in"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": " of revenue. That gives ",
+      "unverified": []
+     },
+     {
+      "text": "20.1 months",
+      "metric": "runway_months",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "date": {
+          "gte": "2026-06-01",
+          "lt": "2026-10-01"
+         },
+         "direction": "credit",
+         "not": {
+          "status": [
+           "FAILED",
+           "CANCELLED",
+           "FULL_REVERSAL"
+          ]
+         },
+         "and": [
+          {
+           "not": {
+            "type": [
+             "REFUND",
+             "CARD_REFUND",
+             "CARD_CHARGEBACK"
+            ]
+           }
+          }
+         ]
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "category_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "burn_in"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": " of runway. Gross burn was ",
+      "unverified": []
+     },
+     {
+      "text": "-\u00a3162,334",
+      "metric": "burn_gross_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "date": {
+          "gte": "2026-06-01",
+          "lt": "2026-10-01"
+         },
+         "not": {
+          "status": [
+           "FAILED",
+           "CANCELLED",
+           "FULL_REVERSAL"
+          ]
+         },
+         "or": [
+          {
+           "direction": "debit"
+          },
+          {
+           "direction": "credit",
+           "type": [
+            "REFUND",
+            "CARD_REFUND",
+            "CARD_CHARGEBACK"
+           ]
+          }
+         ]
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "direction"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "burn_out"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ", against a prior three-month average of ",
+      "unverified": []
+     },
+     {
+      "text": "-\u00a3132,514",
+      "metric": "burn_gross_prior_avg",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "date": {
+          "gte": "2026-06-01",
+          "lt": "2026-10-01"
+         },
+         "not": {
+          "status": [
+           "FAILED",
+           "CANCELLED",
+           "FULL_REVERSAL"
+          ]
+         },
+         "or": [
+          {
+           "direction": "debit"
+          },
+          {
+           "direction": "credit",
+           "type": [
+            "REFUND",
+            "CARD_REFUND",
+            "CARD_CHARGEBACK"
+           ]
+          }
+         ]
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "direction"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "burn_out"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ".",
+      "unverified": []
+     }
+    ],
+    "unverified": []
+   },
+   {
+    "title": "What changed",
+    "body_filled": "Total spend was \u00a3162,334, up \u00a329,819 (+22.5%).\n\nPayroll & Benefits rose \u00a311,667 (+20.3%). Isla Fraser (\u00a38,700), Priya Chandra (\u00a37,100) and Rhys Owen (\u00a37,800) each received two salary payments, and there was a one-off recruitment placement fee.\n\nRent rose +187.2% to \u00a36,750 because of extra WeWork direct debits on top of the normal desk fee.\n\nSubscriptions rose +92.0%, driven by a new JetBrains licence (\u00a31,990), a new BCS membership (\u00a3790) and repeated Figma charges.\n\nCapital investments were \u00a34,775: one-off equipment from Apple (\u00a32,399) and Posturite (\u00a32,376).\n\nLegal & Professional Fees rose +39.3%. Harrison & Webb billed \u00a34,900, and a new PI insurance renewal (\u00a31,240) is temporarily sitting in this category.",
+    "segments": [
+     {
+      "text": "Total spend was ",
+      "unverified": []
+     },
+     {
+      "text": "\u00a3162,334",
+      "metric": "spend_total_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-06-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "spend_total"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ", up ",
+      "unverified": []
+     },
+     {
+      "text": "\u00a329,819",
+      "metric": "spend_total_change_abs",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-06-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "spend_total"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": " (",
+      "unverified": []
+     },
+     {
+      "text": "+22.5%",
+      "metric": "spend_total_change_pct",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-06-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "spend_total"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ").\n\nPayroll & Benefits rose ",
+      "unverified": []
+     },
+     {
+      "text": "\u00a311,667",
+      "metric": "cat_operating_expenses_payroll_benefits_change_abs",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "category_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "cat_spend"
+          },
+          {
+           "function": "count",
+           "as": "cat_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": " (",
+      "unverified": []
+     },
+     {
+      "text": "+20.3%",
+      "metric": "cat_operating_expenses_payroll_benefits_change_pct",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "category_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "cat_spend"
+          },
+          {
+           "function": "count",
+           "as": "cat_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": "). Isla Fraser (",
+      "unverified": []
+     },
+     {
+      "text": "\u00a38,700",
+      "metric": "ven_isla_fraser_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "participant_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "vendor_spend"
+          },
+          {
+           "function": "count",
+           "as": "vendor_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": "), Priya Chandra (",
+      "unverified": []
+     },
+     {
+      "text": "\u00a37,100",
+      "metric": "ven_priya_chandra_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "participant_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "vendor_spend"
+          },
+          {
+           "function": "count",
+           "as": "vendor_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ") and Rhys Owen (",
+      "unverified": []
+     },
+     {
+      "text": "\u00a37,800",
+      "metric": "ven_rhys_owen_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "participant_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "vendor_spend"
+          },
+          {
+           "function": "count",
+           "as": "vendor_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ") each received two salary payments, and there was a one-off recruitment placement fee.\n\nRent rose ",
+      "unverified": []
+     },
+     {
+      "text": "+187.2%",
+      "metric": "cat_operating_expenses_rent_change_pct",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "category_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "cat_spend"
+          },
+          {
+           "function": "count",
+           "as": "cat_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": " to ",
+      "unverified": []
+     },
+     {
+      "text": "\u00a36,750",
+      "metric": "cat_operating_expenses_rent_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "category_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "cat_spend"
+          },
+          {
+           "function": "count",
+           "as": "cat_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": " because of extra WeWork direct debits on top of the normal desk fee.\n\nSubscriptions rose ",
+      "unverified": []
+     },
+     {
+      "text": "+92.0%",
+      "metric": "cat_operating_expenses_subscriptions_change_pct",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "category_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "cat_spend"
+          },
+          {
+           "function": "count",
+           "as": "cat_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ", driven by a new JetBrains licence (",
+      "unverified": []
+     },
+     {
+      "text": "\u00a31,990",
+      "metric": "ven_jetbrains_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "participant_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "vendor_spend"
+          },
+          {
+           "function": "count",
+           "as": "vendor_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": "), a new BCS membership (",
+      "unverified": []
+     },
+     {
+      "text": "\u00a3790",
+      "metric": "ven_bcs_the_chartered_institute_for_it_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "participant_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "vendor_spend"
+          },
+          {
+           "function": "count",
+           "as": "vendor_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ") and repeated Figma charges.\n\nCapital investments were ",
+      "unverified": []
+     },
+     {
+      "text": "\u00a34,775",
+      "metric": "cat_financial_items_capital_investments_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "category_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "cat_spend"
+          },
+          {
+           "function": "count",
+           "as": "cat_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ": one-off equipment from Apple (",
+      "unverified": []
+     },
+     {
+      "text": "\u00a32,399",
+      "metric": "ven_apple_store_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "participant_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "vendor_spend"
+          },
+          {
+           "function": "count",
+           "as": "vendor_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ") and Posturite (",
+      "unverified": []
+     },
+     {
+      "text": "\u00a32,376",
+      "metric": "ven_posturite_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "participant_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "vendor_spend"
+          },
+          {
+           "function": "count",
+           "as": "vendor_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ").\n\nLegal & Professional Fees rose ",
+      "unverified": []
+     },
+     {
+      "text": "+39.3%",
+      "metric": "cat_operating_expenses_legal_professional_fe_change_pct",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "category_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "cat_spend"
+          },
+          {
+           "function": "count",
+           "as": "cat_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ". Harrison & Webb billed ",
+      "unverified": []
+     },
+     {
+      "text": "\u00a34,900",
+      "metric": "ven_harrison_webb_solicitors_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "participant_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "vendor_spend"
+          },
+          {
+           "function": "count",
+           "as": "vendor_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ", and a new PI insurance renewal (",
+      "unverified": []
+     },
+     {
+      "text": "\u00a31,240",
+      "metric": "ven_meridian_insurance_brokers_m",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "include_excluded_from_runway": false,
+        "aggregate": {
+         "group_by": [
+          {
+           "field": "date",
+           "interval": "month"
+          },
+          {
+           "field": "participant_id"
+          }
+         ],
+         "metrics": [
+          {
+           "function": "sum",
+           "field": "reporting_amount",
+           "as": "vendor_spend"
+          },
+          {
+           "function": "count",
+           "as": "vendor_n"
+          }
+         ]
+        },
+        "limit": 100
+       }
+      }
+     },
+     {
+      "text": ") is temporarily sitting in this category.",
+      "unverified": []
+     }
+    ],
+    "unverified": []
+   },
+   {
+    "title": "Books status",
+    "body_filled": "97.0% of the 203 payments are ready for the accountant. 6 still need review: office supplies, travel, an insurance renewal and an unidentified management fee. 188 payments have no receipt or invoice attached, so receipt collection is the main gap before handover.",
+    "segments": [
+     {
+      "text": "97.0%",
+      "metric": "readiness_pct",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "amount": {
+          "gt": 0
+         },
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         },
+         "or": [
+          {
+           "reconciliation": "needs_review"
+          },
+          {
+           "reconciliation": {
+            "is_null": true
+           },
+           "has_evidence": false
+          }
+         ]
+        },
+        "aggregate": {
+         "metrics": [
+          {
+           "function": "count",
+           "as": "needs_review_n"
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "text": " of the ",
+      "unverified": []
+     },
+     {
+      "text": "203",
+      "metric": "payments_n",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "amount": {
+          "gt": 0
+         },
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         }
+        },
+        "aggregate": {
+         "metrics": [
+          {
+           "function": "count",
+           "as": "payments_n"
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "text": " payments are ready for the accountant. ",
+      "unverified": []
+     },
+     {
+      "text": "6",
+      "metric": "needs_review_n",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "amount": {
+          "gt": 0
+         },
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         },
+         "or": [
+          {
+           "reconciliation": "needs_review"
+          },
+          {
+           "reconciliation": {
+            "is_null": true
+           },
+           "has_evidence": false
+          }
+         ]
+        },
+        "aggregate": {
+         "metrics": [
+          {
+           "function": "count",
+           "as": "needs_review_n"
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "text": " still need review: office supplies, travel, an insurance renewal and an unidentified management fee. ",
+      "unverified": []
+     },
+     {
+      "text": "188",
+      "metric": "no_evidence_n",
+      "source": {
+       "tool": "query_transactions",
+       "input": {
+        "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+        "where": {
+         "status": "BOOKED",
+         "direction": "debit",
+         "amount": {
+          "gt": 0
+         },
+         "date": {
+          "gte": "2026-09-01",
+          "lt": "2026-10-01"
+         },
+         "has_evidence": false
+        },
+        "aggregate": {
+         "metrics": [
+          {
+           "function": "count",
+           "as": "no_evidence_n"
+          }
+         ]
+        }
+       }
+      }
+     },
+     {
+      "text": " payments have no receipt or invoice attached, so receipt collection is the main gap before handover.",
+      "unverified": []
+     }
+    ],
+    "unverified": []
+   },
+   {
+    "title": "Risks & asks",
+    "body_filled": "We need to confirm whether the second salary run for Isla Fraser, Priya Chandra and Rhys Owen was intentional. We also need to confirm whether the extra WeWork and Figma charges are duplicates, and claw them back if so. An unknown vendor charged a management fee with no invoice: please identify it or dispute it. Team members should upload missing receipts so the backlog shrinks before year-end. Several of this month's increases look one-off, so underlying burn should come back down if those duplicates are confirmed.",
+    "segments": [
+     {
+      "text": "We need to confirm whether the second salary run for Isla Fraser, Priya Chandra and Rhys Owen was intentional. We also need to confirm whether the extra WeWork and Figma charges are duplicates, and claw them back if so. An unknown vendor charged a management fee with no invoice: please identify it or dispute it. Team members should upload missing receipts so the backlog shrinks before year-end. Several of this month's increases look one-off, so underlying burn should come back down if those duplicates are confirmed.",
+      "unverified": []
+     }
+    ],
+    "unverified": []
+   }
+  ]
+ },
+ "tool_calls": [
+  {
+   "run": "A",
+   "tool": "get_current_user",
+   "input_summary": "{}",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_accounts",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"limit\":100}",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-06-01\",\"lt\":\"2026-07-01\"}},\"include_ex...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-06-01\",\"lt\":\"2026-07-01\"}},\"include_ex...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-07-01\",\"lt\":\"2026-08-01\"}},\"include_ex...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-07-01\",\"lt\":\"2026-08-01\"}},\"include_ex...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-08-01\",\"lt\":\"2026-09-01\"}},\"include_ex...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-08-01\",\"lt\":\"2026-09-01\"}},\"include_ex...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-09-01\",\"lt\":\"2026-10-01\"}},\"include_ex...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-09-01\",\"lt\":\"2026-10-01\"}},\"include_ex...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-06-01\",\"lt\":\"2026-10-01\"}},\"include_ex...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"date\":{\"gte\":\"2026-06-01\",\"lt\":\"2026-10-01\"},\"not\":{\"status\":[\"FAILED\",\"CANCELLED\",\"FULL_REVERS...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"date\":{\"gte\":\"2026-06-01\",\"lt\":\"2026-10-01\"},\"direction\":\"credit\",\"not\":{\"status\":[\"FAILED\",\"CA...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_categories",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"limit\":100}",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transaction_participants",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"limit\":100}",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"amount\":{\"gt\":0},\"date\":{\"gte\":\"2026-09-01\",\"lt\":\"2026-10...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"amount\":{\"gt\":0},\"date\":{\"gte\":\"2026-09-01\",\"lt\":\"2026-10...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"amount\":{\"gt\":0},\"date\":{\"gte\":\"2026-09-01\",\"lt\":\"2026-10...",
+   "ok": true
+  },
+  {
+   "run": "A",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"status\":\"BOOKED\",\"direction\":\"debit\",\"amount\":{\"gt\":0},\"date\":{\"gte\":\"2026-09-01\",\"lt\":\"2026-10...",
+   "ok": true
+  },
+  {
+   "run": "B",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"category_id\":\"cat_01m5d5cmjce49a5y5pdf6kcf18\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-09-01\",\"l...",
+   "ok": true
+  },
+  {
+   "run": "B",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"category_id\":\"cat_01m5d5cmjce49a5y6rkvs80vzy\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-06-01\",\"l...",
+   "ok": true
+  },
+  {
+   "run": "B",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"category_id\":\"cat_01m5d5cmjce49a5y6cxv0qsbph\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-09-01\",\"l...",
+   "ok": true
+  },
+  {
+   "run": "B",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"category_id\":\"cat_01m5d5cmjce49a5ya5vh2jddvs\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-09-01\",\"l...",
+   "ok": true
+  },
+  {
+   "run": "B",
+   "tool": "query_transactions",
+   "input_summary": "{\"organisation_id\":\"org_01m5d5cmjbe49a5y4d904dq3c8\",\"where\":{\"category_id\":\"cat_01m5d5cmjce49a5y7cyz4ak031\",\"direction\":\"debit\",\"date\":{\"gte\":\"2026-09-01\",\"l...",
+   "ok": true
+  }
+ ],
+ "notes": []
+}

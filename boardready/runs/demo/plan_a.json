@@ -1,0 +1,581 @@
+{
+ "A1_user": [
+  "get_current_user",
+  {}
+ ],
+ "A2_accounts": [
+  "query_accounts",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "limit": 100
+  }
+ ],
+ "A3_cat_2026-06": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "date": {
+     "gte": "2026-06-01",
+     "lt": "2026-07-01"
+    }
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     },
+     {
+      "field": "category_id"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "cat_spend"
+     },
+     {
+      "function": "count",
+      "as": "cat_n"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A4_vendor_2026-06": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "date": {
+     "gte": "2026-06-01",
+     "lt": "2026-07-01"
+    }
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     },
+     {
+      "field": "participant_id"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "vendor_spend"
+     },
+     {
+      "function": "count",
+      "as": "vendor_n"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A3_cat_2026-07": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "date": {
+     "gte": "2026-07-01",
+     "lt": "2026-08-01"
+    }
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     },
+     {
+      "field": "category_id"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "cat_spend"
+     },
+     {
+      "function": "count",
+      "as": "cat_n"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A4_vendor_2026-07": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "date": {
+     "gte": "2026-07-01",
+     "lt": "2026-08-01"
+    }
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     },
+     {
+      "field": "participant_id"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "vendor_spend"
+     },
+     {
+      "function": "count",
+      "as": "vendor_n"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A3_cat_2026-08": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "date": {
+     "gte": "2026-08-01",
+     "lt": "2026-09-01"
+    }
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     },
+     {
+      "field": "category_id"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "cat_spend"
+     },
+     {
+      "function": "count",
+      "as": "cat_n"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A4_vendor_2026-08": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "date": {
+     "gte": "2026-08-01",
+     "lt": "2026-09-01"
+    }
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     },
+     {
+      "field": "participant_id"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "vendor_spend"
+     },
+     {
+      "function": "count",
+      "as": "vendor_n"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A3_cat_2026-09": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "date": {
+     "gte": "2026-09-01",
+     "lt": "2026-10-01"
+    }
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     },
+     {
+      "field": "category_id"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "cat_spend"
+     },
+     {
+      "function": "count",
+      "as": "cat_n"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A4_vendor_2026-09": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "date": {
+     "gte": "2026-09-01",
+     "lt": "2026-10-01"
+    }
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     },
+     {
+      "field": "participant_id"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "vendor_spend"
+     },
+     {
+      "function": "count",
+      "as": "vendor_n"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A3_total": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "date": {
+     "gte": "2026-06-01",
+     "lt": "2026-10-01"
+    }
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "spend_total"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A5_burn_out": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "date": {
+     "gte": "2026-06-01",
+     "lt": "2026-10-01"
+    },
+    "not": {
+     "status": [
+      "FAILED",
+      "CANCELLED",
+      "FULL_REVERSAL"
+     ]
+    },
+    "or": [
+     {
+      "direction": "debit"
+     },
+     {
+      "direction": "credit",
+      "type": [
+       "REFUND",
+       "CARD_REFUND",
+       "CARD_CHARGEBACK"
+      ]
+     }
+    ]
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     },
+     {
+      "field": "direction"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "burn_out"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A5_burn_in": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "date": {
+     "gte": "2026-06-01",
+     "lt": "2026-10-01"
+    },
+    "direction": "credit",
+    "not": {
+     "status": [
+      "FAILED",
+      "CANCELLED",
+      "FULL_REVERSAL"
+     ]
+    },
+    "and": [
+     {
+      "not": {
+       "type": [
+        "REFUND",
+        "CARD_REFUND",
+        "CARD_CHARGEBACK"
+       ]
+      }
+     }
+    ]
+   },
+   "include_excluded_from_runway": false,
+   "aggregate": {
+    "group_by": [
+     {
+      "field": "date",
+      "interval": "month"
+     },
+     {
+      "field": "category_id"
+     }
+    ],
+    "metrics": [
+     {
+      "function": "sum",
+      "field": "reporting_amount",
+      "as": "burn_in"
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A6_categories": [
+  "query_categories",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "limit": 100
+  }
+ ],
+ "A6_participants": [
+  "query_transaction_participants",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "limit": 100
+  }
+ ],
+ "A7_exceptions": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "amount": {
+     "gt": 0
+    },
+    "date": {
+     "gte": "2026-09-01",
+     "lt": "2026-10-01"
+    },
+    "or": [
+     {
+      "reconciliation": "needs_review"
+     },
+     {
+      "reconciliation": {
+       "is_null": true
+      },
+      "has_evidence": false
+     }
+    ]
+   },
+   "limit": 100
+  }
+ ],
+ "A8_payments": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "amount": {
+     "gt": 0
+    },
+    "date": {
+     "gte": "2026-09-01",
+     "lt": "2026-10-01"
+    }
+   },
+   "aggregate": {
+    "metrics": [
+     {
+      "function": "count",
+      "as": "payments_n"
+     }
+    ]
+   }
+  }
+ ],
+ "A8_needs_review": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "amount": {
+     "gt": 0
+    },
+    "date": {
+     "gte": "2026-09-01",
+     "lt": "2026-10-01"
+    },
+    "or": [
+     {
+      "reconciliation": "needs_review"
+     },
+     {
+      "reconciliation": {
+       "is_null": true
+      },
+      "has_evidence": false
+     }
+    ]
+   },
+   "aggregate": {
+    "metrics": [
+     {
+      "function": "count",
+      "as": "needs_review_n"
+     }
+    ]
+   }
+  }
+ ],
+ "A8_no_evidence": [
+  "query_transactions",
+  {
+   "organisation_id": "org_01m5d5cmjbe49a5y4d904dq3c8",
+   "where": {
+    "status": "BOOKED",
+    "direction": "debit",
+    "amount": {
+     "gt": 0
+    },
+    "date": {
+     "gte": "2026-09-01",
+     "lt": "2026-10-01"
+    },
+    "has_evidence": false
+   },
+   "aggregate": {
+    "metrics": [
+     {
+      "function": "count",
+      "as": "no_evidence_n"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BoardReady</title>
+<style>
+  :root {
+    --bg:#f4f5f8; --card:#ffffff; --ink:#151a23; --mut:#687083; --line:#e3e6ed; --soft:#f0f2f6;
+    --acc:#3155d6; --acc-soft:#eaf0ff; --ok:#0f7a52; --ok-soft:#e5f5ee; --bad:#c42b2b; --bad-soft:#fdeeee;
+    --warn:#9a5b00; --warn-soft:#fff4e0; --on-acc:#ffffff; --shadow:0 1px 2px rgba(16,24,40,.05), 0 1px 3px rgba(16,24,40,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#0f1218; --card:#171b23; --ink:#e7eaf0; --mut:#9aa3b5; --line:#272d39; --soft:#1e232d;
+      --acc:#7d9bff; --acc-soft:#1d2744; --ok:#4cc38a; --ok-soft:#14291f; --bad:#ff7b7b; --bad-soft:#3a1c1f;
+      --warn:#f0b357; --warn-soft:#33270f; --on-acc:#0b0e14; --shadow:none;
+    }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.55 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--ink); }
+  button, select, input { font:inherit; color:inherit; }
+
+  /* top bar */
+  header { position:sticky; top:0; z-index:10; background:var(--card);
+           border-bottom:1px solid var(--line); }
+  .bar { max-width:1160px; margin:0 auto; padding:12px 20px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+  .logo { display:flex; align-items:center; gap:8px; font-weight:700; font-size:18px; margin-right:auto; letter-spacing:-.01em; }
+  .logo i { width:26px; height:26px; border-radius:7px; background:linear-gradient(135deg,var(--acc),#7a5cff); display:inline-grid;
+            place-items:center; color:#fff; font-style:normal; font-size:14px; }
+  .logo small { font-weight:500; color:var(--mut); font-size:13px; }
+  .ctl { height:36px; padding:0 12px; border:1px solid var(--line); border-radius:9px; background:var(--card); }
+  .btn { height:36px; padding:0 14px; border-radius:9px; border:1px solid var(--line); background:var(--card); cursor:pointer; font-weight:500; }
+  .btn:hover { background:var(--soft); }
+  .btn.primary { background:var(--acc); border-color:var(--acc); color:var(--on-acc); font-weight:600; }
+  .btn.primary:hover { filter:brightness(1.07); }
+  .btn.ok { background:var(--ok); border-color:var(--ok); color:var(--on-acc); font-weight:600; }
+  .btn.sm { height:30px; padding:0 10px; font-size:13px; }
+  .btn.xs { height:24px; padding:0 8px; font-size:12px; border-radius:6px; }
+  .btn:disabled { opacity:.55; cursor:default; }
+
+  main { max-width:1160px; margin:0 auto; padding:20px; }
+  .meta { color:var(--mut); font-size:13px; margin:0 0 14px; display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; }
+
+  /* trust strip */
+  .trust { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .chip { display:inline-flex; align-items:center; gap:6px; padding:5px 11px; border-radius:999px; font-size:13px;
+          background:var(--card); border:1px solid var(--line); white-space:nowrap; }
+  .chip.good { background:var(--ok-soft); border-color:transparent; color:var(--ok); font-weight:600; }
+  .chip.badc { background:var(--bad-soft); border-color:transparent; color:var(--bad); font-weight:600; }
+
+  /* KPI cards */
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-bottom:18px; }
+  .kpi { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow); cursor:help; }
+  .kpi .l { color:var(--mut); font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+  .kpi .v { font-size:24px; font-weight:700; letter-spacing:-.02em; margin-top:2px; font-variant-numeric:tabular-nums; }
+  .kpi .s { font-size:12.5px; color:var(--mut); margin-top:2px; }
+  .meter { height:6px; border-radius:6px; background:var(--soft); margin-top:8px; overflow:hidden; }
+  .meter b { display:block; height:100%; background:var(--ok); border-radius:6px; transition:width .6s; }
+
+  /* cards */
+  section { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin-bottom:18px; box-shadow:var(--shadow); }
+  .sh { display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  section h2 { margin:0; font-size:16.5px; letter-spacing:-.01em; display:flex; align-items:center; gap:8px; }
+  .n { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:6px; background:var(--acc-soft); color:var(--acc); font-size:12px; font-weight:700; }
+  .sub { color:var(--mut); font-size:13px; margin:4px 0 14px; }
+  .count { font-size:12px; font-weight:600; padding:2px 8px; border-radius:999px; background:var(--soft); color:var(--mut); }
+
+  /* exceptions */
+  .exc { display:grid; grid-template-columns: 1fr auto; gap:10px 16px; padding:14px 0; border-top:1px solid var(--line); }
+  .exc:first-of-type { border-top:none; padding-top:4px; }
+  .exc .who { font-weight:600; }
+  .exc .amt { font-weight:700; font-variant-numeric:tabular-nums; text-align:right; }
+  .exc .desc { color:var(--mut); font-size:13px; }
+  .tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+  .tag { font-size:12px; padding:2px 8px; border-radius:6px; font-weight:600; }
+  .tag.warn { background:var(--warn-soft); color:var(--warn); }
+  .tag.bad { background:var(--bad-soft); color:var(--bad); }
+  .tag.okt { background:var(--ok-soft); color:var(--ok); }
+  .tag.mut { background:var(--soft); color:var(--mut); }
+  .fix { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:13.5px; margin-top:8px; }
+  .code { font-family:ui-monospace, "Cascadia Code", Consolas, monospace; font-size:12.5px; background:var(--soft); padding:2px 7px; border-radius:6px; }
+  .msg { margin-top:8px; padding:8px 10px; border-radius:9px; background:var(--soft); font-size:13px; display:flex; gap:8px; align-items:flex-start; }
+  .msg span { flex:1; }
+  .actions { display:flex; gap:6px; justify-content:flex-end; align-items:flex-start; flex-wrap:wrap; }
+  .confirm { font-size:13px; background:var(--acc-soft); border-radius:9px; padding:8px 10px; margin-top:8px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+
+  /* changes */
+  .chg { padding:14px 0; border-top:1px solid var(--line); }
+  .chg:first-of-type { border-top:none; padding-top:4px; }
+  .chg .top { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:baseline; }
+  .delta { font-weight:700; font-variant-numeric:tabular-nums; }
+  .up { color:var(--bad); } .down { color:var(--ok); }
+  .bars { display:grid; grid-template-columns:70px 1fr 110px; gap:4px 10px; align-items:center; font-size:12px; color:var(--mut); margin:8px 0; max-width:560px; cursor:help; }
+  .bars i { display:block; height:8px; border-radius:4px; }
+  .bars .bm { background:var(--acc); } .bars .ba { background:color-mix(in srgb, var(--mut) 45%, transparent); }
+  .bars .num { text-align:right; font-variant-numeric:tabular-nums; color:var(--ink); }
+  details summary { cursor:pointer; color:var(--acc); font-size:13px; margin-top:6px; list-style:none; }
+  details summary::before { content:"▸ "; } details[open] summary::before { content:"▾ "; }
+  table { width:100%; border-collapse:collapse; font-size:13px; margin-top:6px; }
+  td, th { padding:6px 6px; border-top:1px solid var(--line); text-align:left; vertical-align:top; }
+  th { color:var(--mut); font-weight:500; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; border-top:none; }
+  td.r { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+
+  /* update */
+  .doc { max-width:760px; }
+  .doc .hl { font-size:17px; font-weight:600; margin:2px 0 10px; }
+  .doc h3 { font-size:14px; margin:16px 0 4px; color:var(--mut); text-transform:uppercase; letter-spacing:.04em; }
+  .doc p { margin:0 0 6px; white-space:pre-wrap; }
+  .fig { background:var(--acc-soft); color:var(--ink); border-radius:5px; padding:0 4px; cursor:help; box-shadow:inset 0 -1px 0 var(--acc); }
+  .unv { background:var(--bad-soft); color:var(--bad); border-radius:5px; padding:0 4px; font-weight:600; }
+  .tip { position:fixed; z-index:50; max-width:440px; background:#111827; color:#e5e7eb; font:12px/1.45 ui-monospace, Consolas, monospace;
+         padding:8px 10px; border-radius:8px; pointer-events:none; white-space:pre-wrap; box-shadow:0 8px 24px rgba(0,0,0,.25); display:none; }
+  .tip b { color:#93b4ff; font-family:system-ui, sans-serif; }
+
+  /* live */
+  .steps { display:flex; gap:6px; flex-wrap:wrap; margin:6px 0 12px; }
+  .step { font-size:12.5px; padding:4px 10px; border-radius:999px; background:var(--soft); color:var(--mut); }
+  .step.on { background:var(--acc); color:var(--on-acc); } .step.done { background:var(--ok-soft); color:var(--ok); }
+  #live { font:12.5px/1.5 ui-monospace, Consolas, monospace; max-height:280px; overflow:auto; }
+  #live div { padding:4px 0; border-top:1px dashed var(--line); animation:fade .3s; }
+  #live b { color:var(--acc); }
+  @keyframes fade { from { opacity:0; transform:translateY(-3px); } }
+  .spin { width:14px; height:14px; border:2px solid var(--acc-soft); border-top-color:var(--acc); border-radius:50%; display:inline-block; animation:sp 0.8s linear infinite; vertical-align:-2px; }
+  @keyframes sp { to { transform:rotate(360deg); } }
+
+  .muted { color:var(--mut); } .hidden { display:none !important; }
+  .toast { position:fixed; right:20px; bottom:20px; z-index:60; padding:10px 14px; border-radius:10px; background:var(--ink); color:var(--card);
+           font-size:14px; box-shadow:0 8px 24px rgba(0,0,0,.2); animation:fade .2s; max-width:420px; }
+  .toast.err { background:var(--bad); color:#fff; }
+  .empty { text-align:center; padding:60px 20px; color:var(--mut); }
+  pre { white-space:pre-wrap; font-size:12px; margin:6px 0 0; }
+  @media (max-width:640px) { .exc { grid-template-columns:1fr; } .actions { justify-content:flex-start; } .logo { width:100%; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="logo"><i>B</i>BoardReady <small>month-end close &amp; investor update</small></div>
+    <input class="ctl" type="month" id="month" title="Month to close">
+    <button class="btn primary" id="closeBtn">Close month</button>
+    <select class="ctl" id="replay" title="Replay a saved run"><option value="">Replay a saved run…</option></select>
+  </div>
+</header>
+
+<main>
+  <section id="liveBox" class="hidden">
+    <div class="sh"><h2><span class="spin"></span> Closing <span id="liveMonth"></span></h2><span class="count" id="liveCount">0 queries</span></div>
+    <div class="steps" id="steps"></div>
+    <div class="sub" id="stage"></div>
+    <div id="live"></div>
+  </section>
+
+  <div id="empty" class="empty">Pick a month and click <b>Close month</b>, or replay a saved run.</div>
+
+  <div id="content" class="hidden">
+    <div class="meta" id="meta"></div>
+    <div class="trust" id="trust"></div>
+    <div class="kpis" id="kpis"></div>
+
+    <section>
+      <div class="sh"><h2><span class="n">1</span> Not ready for the accountant</h2><span class="count" id="excCount"></span></div>
+      <div class="sub">Nothing changes in Seapoint until you approve. Each approval runs a separate agent that can only use the two write tools, and it is logged below.</div>
+      <div id="exc"></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2><span class="n">2</span> What changed</h2><span class="count" id="chgCount"></span></div>
+      <div class="sub">Material changes are more than £500 and more than 20% vs the average of the prior 3 months. Every figure is a Seapoint aggregate.</div>
+      <div id="changes"></div>
+      <div id="newVendors"></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2><span class="n">3</span> Investor update</h2><button class="btn sm" id="copyUpd">Copy text</button></div>
+      <div class="sub">Highlighted figures are filled in by code. Hover one to see its source query. Red means the model typed it and it isn't verified.</div>
+      <div class="doc" id="update"></div>
+    </section>
+
+    <section>
+      <div class="sh"><h2><span class="n">4</span> Audit log</h2><span class="count" id="audCount"></span></div>
+      <div class="sub">Every write to Seapoint: time, tool, ids, before/after, BoardReady and Seapoint change ids.</div>
+      <div id="audit"></div>
+    </section>
+
+    <section>
+      <details><summary>All Seapoint queries in this run (<span id="callsN"></span>)</summary><div id="calls"></div></details>
+    </section>
+  </div>
+</main>
+<div class="tip" id="tip"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const gbp = (v, d = 2) => v == null ? "–" : (v < 0 ? "-" : "") + "£" + Math.abs(v).toLocaleString("en-GB", {minimumFractionDigits:d, maximumFractionDigits:d});
+const signed = v => (v < 0 ? "−" : "+") + "£" + Math.abs(v).toLocaleString("en-GB", {maximumFractionDigits:0});
+const api = (p, body) => fetch(p, body ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)} : {}).then(r => r.json());
+const monthName = ym => { if (!ym) return ""; const [y, m] = ym.split("-"); return new Date(+y, +m - 1, 1).toLocaleString("en-GB", {month:"long", year:"numeric"}); };
+let RUN = null, poll = null, pending = null;
+
+/* ---------- source tooltips ---------- */
+const SRC = new Map(); let srcN = 0;
+function srcAttr(s, label) { if (!s) return ""; const k = "s" + (srcN++); SRC.set(k, {s, label}); return ` data-src="${k}"`; }
+document.addEventListener("mouseover", e => {
+  const el = e.target.closest("[data-src]"); const tip = $("tip");
+  if (!el) { tip.style.display = "none"; return; }
+  const {s, label} = SRC.get(el.dataset.src) || {};
+  if (!s) return;
+  tip.innerHTML = `<b>${esc(label || "Source")} ← Seapoint ${esc(s.tool)}</b>\n` + esc(typeof s.input === "string" ? s.input : JSON.stringify(s.input, null, 1));
+  tip.style.display = "block";
+});
+document.addEventListener("mousemove", e => {
+  const tip = $("tip"); if (tip.style.display !== "block") return;
+  const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 10), y = e.clientY + 16 + tip.offsetHeight > innerHeight ? e.clientY - tip.offsetHeight - 10 : e.clientY + 16;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+});
+
+function toast(msg, err) {
+  const d = document.createElement("div"); d.className = "toast" + (err ? " err" : ""); d.textContent = msg;
+  document.body.appendChild(d); setTimeout(() => d.remove(), err ? 7000 : 3000);
+}
+
+function segHTML(segs) {
+  return (segs || []).map(s => {
+    if (s.metric) return `<span class="fig"${srcAttr(s.source, s.metric)}>${esc(s.text)}</span>`;
+    if (s.unknown) return `<span class="unv" title="Placeholder not found in metrics">${esc(s.text)}</span>`;
+    let t = esc(s.text);
+    for (const u of (s.unverified || [])) t = t.split(esc(u)).join(`<span class="unv" title="Unverified: typed by the model">${esc(u)}</span>`);
+    return t;
+  }).join("");
+}
+
+/* ---------- render ---------- */
+function render(run) {
+  RUN = run; SRC.clear();
+  $("empty").classList.add("hidden"); $("content").classList.remove("hidden");
+  const M = run.metrics || {}, r = run.readiness, v = run.verification;
+
+  $("meta").innerHTML = `<b style="color:var(--ink);font-size:15px">${esc(run.org_name || "")} · ${esc(monthName(run.month))}</b>
+    <span>Accounting: ${esc(run.accounting_software || "–")}</span><span>Run ${esc(run.run_id)}</span>` +
+    (run.notes && run.notes.length ? `<span class="tag warn">${esc(run.notes.join("; "))}</span>` : "");
+
+  const allOk = v.verified_n === v.total_n;
+  $("trust").innerHTML = `<span class="chip ${allOk ? "good" : "badc"}">${allOk ? "✓" : "!"} ${v.verified_n}/${v.total_n} figures verified</span>` +
+    v.sense_checks.map(c => `<span class="chip ${c.ok ? "" : "badc"}" title="${esc(c.detail)}"><span style="color:${c.ok ? "var(--ok)" : "var(--bad)"};font-weight:700">${c.ok ? "✓" : "✗"}</span> ${esc(c.name)}</span>`).join("");
+
+  const pct = r.pct_after ?? r.pct, open = Math.max(0, (r.needs_review_n || 0) - (r.approved_n || 0));
+  const kpi = (label, key, sub, extra = "") => {
+    const m = M[key]; if (!m) return "";
+    return `<div class="kpi"${srcAttr(m.source, m.label)}><div class="l">${esc(label)}</div><div class="v">${esc(m.display)}</div><div class="s">${sub}</div>${extra}</div>`;
+  };
+  const chg = M.spend_total_change_pct;
+  $("kpis").innerHTML =
+    kpi("Cash", "cash", "eligible balances, today") +
+    kpi("Runway", "runway_months", "cash ÷ net burn") +
+    kpi("Net burn", "burn_net_m", `revenue ${esc(M.revenue_m?.display || "–")}`) +
+    kpi("Spend", "spend_total_m", chg ? `<span class="${chg.value > 0 ? "up" : "down"}" style="font-weight:600">${esc(chg.display)}</span> vs prior 3-mo avg` : "") +
+    `<div class="kpi"${srcAttr(M.readiness_pct?.source, "readiness")}><div class="l">Ready for accountant</div><div class="v">${pct == null ? "–" : pct + "%"}</div>
+       <div class="s">${open} of ${r.payments_n} payments need review</div><div class="meter"><b style="width:${pct || 0}%"></b></div></div>`;
+
+  // exceptions
+  $("excCount").textContent = `${open} open · ${r.no_evidence_n ?? "–"} without receipt this month`;
+  $("exc").innerHTML = run.exceptions.map((e, i) => {
+    const pf = e.proposed_fix;
+    const tags = e.status === "approved" ? `<span class="tag okt">coded &amp; approved · change ${esc(e.change_id || "")}</span>`
+      : (e.issue || "").split(/,\s*/).filter(Boolean).map(t => `<span class="tag ${/receipt/.test(t) ? "bad" : "warn"}">${esc(t)}</span>`).join("");
+    let act;
+    if (e.status === "approved") act = `<span class="tag okt">✓ ${esc(e.reconciliation)}</span>`;
+    else if (e.status === "skipped") act = `<span class="tag mut">Skipped</span>`;
+    else if (e.status && e.status.startsWith("rejected")) act = `<span class="tag bad">${esc(e.status)}</span>`;
+    else act = (pf ? `<button class="btn ok sm" data-ask="${i}">Approve fix</button>` : "") + `<button class="btn sm" data-skip="${i}">Skip</button>`;
+    const fix = pf ? `<div class="fix"><span class="muted">Proposed:</span><span class="code">${esc(pf.account_code)}</span>${esc(pf.account_name || "")}
+        <span class="muted">/</span><span class="code">${esc(pf.tax_rate_code)}</span>${esc(pf.tax_rate_name || "")}</div>`
+      : `<div class="fix muted">No suggested coding from Seapoint, so ask the team.</div>`;
+    const conf = pending === i ? `<div class="confirm">Set <span class="code">${esc(pf.account_code)}</span> / <span class="code">${esc(pf.tax_rate_code)}</span>
+        on this ${gbp(e.amount)} payment and approve it in Seapoint?
+        <button class="btn primary xs" data-approve="${i}">Yes, write it</button><button class="btn xs" data-cancel>Cancel</button></div>` : "";
+    return `<div class="exc">
+      <div><div class="who">${esc(e.name)}</div>
+        <div class="desc">${esc(e.date)} · ${esc(e.description)}${e.category ? " · " + esc(e.category) : ""}</div>
+        <div class="tags">${tags}</div>${fix}${conf}
+        ${e.question_for_team ? `<div class="msg">💬<span>${esc(e.question_for_team)}</span><button class="btn xs" data-copyq="${i}">Copy</button></div>` : ""}
+      </div>
+      <div><div class="amt">${gbp(e.amount)}</div><div class="actions" style="margin-top:8px">${act}</div></div>
+    </div>`;
+  }).join("") || `<div class="muted">Nothing outstanding 🎉</div>`;
+
+  // changes
+  $("chgCount").textContent = `${run.changes.length} material`;
+  const maxV = Math.max(1, ...run.changes.flatMap(c => [c.value_m, c.prior_avg]));
+  $("changes").innerHTML = run.changes.map(c => `<div class="chg">
+      <div class="top"><b>${esc(c.label.split(" › ").pop())} <span class="muted" style="font-weight:400;font-size:13px">${esc(c.label.includes(" › ") ? c.label.split(" › ")[0] : "")}</span></b>
+        <span class="delta ${c.change_abs > 0 ? "up" : "down"}"${srcAttr(c.source, c.metric)}>${signed(c.change_abs)} (${c.change_pct == null ? "new" : (c.change_pct > 0 ? "+" : "") + c.change_pct + "%"})</span></div>
+      <div class="bars"${srcAttr(c.source, c.metric)}>
+        <span>${esc(monthName(run.month).split(" ")[0].slice(0,3))}</span><i class="bm" style="width:${c.value_m / maxV * 100}%"></i><span class="num">${gbp(c.value_m, 0)}</span>
+        <span>3-mo avg</span><i class="ba" style="width:${c.prior_avg / maxV * 100}%"></i><span class="num">${gbp(c.prior_avg, 0)}</span>
+      </div>
+      <div>${esc(c.cause)}</div>
+      ${c.evidence.length ? `<details><summary>${c.evidence.length} evidence transaction${c.evidence.length > 1 ? "s" : ""}</summary><table>
+        <tr><th>Date</th><th>Payee</th><th class="r">Amount</th><th>Id</th></tr>${c.evidence.map(e =>
+        `<tr><td>${esc(e.date)}</td><td>${esc(e.name)}</td><td class="r">${gbp(e.amount)}</td><td class="muted code">${esc(e.id)}</td></tr>`).join("")}</table></details>` : ""}
+    </div>`).join("") || `<div class="muted">No material changes this month.</div>`;
+  $("newVendors").innerHTML = (run.new_vendors || []).length ? `<div class="sub" style="margin:14px 0 6px"><b style="color:var(--ink)">New vendors</b> (spend this month, none in the prior 3):</div><div class="tags">` +
+    run.new_vendors.map(n => `<span class="chip">${esc(n.label)} · ${gbp(n.value_m, 0)}</span>`).join("") + `</div>` : "";
+
+  // update
+  const u = run.update;
+  $("update").innerHTML = `<div class="hl">${segHTML(u.headline_segments)}</div>` +
+    u.sections.map(s => `<h3>${esc(s.title)}</h3><p>${segHTML(s.segments)}</p>` +
+      (s.unverified.length ? `<div class="tag bad" style="display:inline-block">Unverified: ${s.unverified.map(esc).join(", ")}</div>` : "")).join("");
+
+  // calls
+  $("callsN").textContent = run.tool_calls.length;
+  $("calls").innerHTML = `<table><tr><th>Run</th><th>Tool</th><th>Arguments</th></tr>${run.tool_calls.map(c =>
+    `<tr><td>${c.run}</td><td>${esc(c.tool)}</td><td class="code" style="font-size:11.5px;background:none">${esc(c.input_summary)}</td></tr>`).join("")}</table>`;
+  loadAudit();
+}
+
+async function loadAudit() {
+  const a = await api("/api/audit");
+  $("audCount").textContent = `${a.length} write${a.length === 1 ? "" : "s"}`;
+  $("audit").innerHTML = a.length ? `<table><tr><th>Time (UTC)</th><th>Tool</th><th>Transaction</th><th>Change</th><th></th></tr>${a.map(e => {
+      const sp = e.result && typeof e.result === "object" ? e.result.change_id : "";
+      return `<tr><td class="r" style="text-align:left">${esc(e.time.slice(0,19).replace("T"," "))}</td><td><b>${esc(e.tool)}</b></td>
+       <td class="code" style="background:none">${esc((e.transaction_ids||[]).join(", "))}</td>
+       <td><span class="code">${esc(e.change_id)}</span>${sp ? `<div class="muted" style="font-size:11.5px">Seapoint ${esc(sp)}</div>` : ""}</td>
+       <td><details><summary>${e.is_error ? "error" : "before / after"}</summary><pre>${esc(JSON.stringify({input:e.input, before:e.before, result:e.result}, null, 1))}</pre></details></td></tr>`;
+    }).join("")}</table>` : `<div class="muted">No writes yet.</div>`;
+}
+
+async function loadRuns(select) {
+  const runs = await api("/api/runs");
+  $("replay").innerHTML = `<option value="">Replay a saved run…</option>` + runs.map(r =>
+    `<option value="${esc(r.run_id)}">${r.run_id === "demo" ? "★ Demo · " : ""}${esc(monthName(r.month))} · ${esc(r.verified)} verified${r.run_id === "demo" ? "" : " · " + esc(r.run_id.slice(0, 15))}</option>`).join("");
+  if (select) $("replay").value = select;
+}
+async function loadRun(id) { pending = null; const r = await api("/api/run?run_id=" + encodeURIComponent(id)); if (!r.error) render(r); else toast(r.error, true); }
+$("replay").onchange = e => e.target.value && loadRun(e.target.value);
+
+/* ---------- live run ---------- */
+const STEPS = [["A:", "Pull from Seapoint"], ["Computing", "Compute metrics"], ["B:", "Investigate & draft"], ["Filling", "Fill & verify"]];
+function drawSteps(stage) {
+  const idx = stage === "done" ? STEPS.length : STEPS.findIndex(([k]) => (stage || "").startsWith(k));
+  $("steps").innerHTML = STEPS.map(([, l], i) => `<span class="step ${i < idx ? "done" : i === idx ? "on" : ""}">${i < idx ? "✓ " : ""}${l}</span>`).join("");
+}
+$("closeBtn").onclick = async () => {
+  $("closeBtn").disabled = true; $("closeBtn").textContent = "Closing…";
+  $("liveBox").classList.remove("hidden"); $("live").innerHTML = ""; $("liveMonth").textContent = monthName($("month").value);
+  drawSteps("A:"); $("stage").textContent = "Starting…";
+  const { run_id } = await api("/api/run", { month: $("month").value });
+  clearInterval(poll);
+  poll = setInterval(async () => {
+    const s = await api("/api/status?run_id=" + run_id);
+    drawSteps(s.stage);
+    $("stage").textContent = s.error ? "Error: " + s.error : (s.stage || "");
+    $("liveCount").textContent = `${s.tool_calls_n || 0} queries`;
+    $("live").innerHTML = (s.recent_tool_calls || []).slice().reverse().map(c => `<div>[${c.run}] <b>${esc(c.tool)}</b> ${esc(c.input_summary)}</div>`).join("");
+    if (s.stage === "done" || s.stage === "error") {
+      clearInterval(poll); $("closeBtn").disabled = false; $("closeBtn").textContent = "Close month";
+      if (s.stage === "done") { $("liveBox").classList.add("hidden"); await loadRuns(run_id); loadRun(run_id); toast("Month closed ✓"); }
+      else toast("Run failed: " + (s.error || ""), true);
+    }
+  }, 2000);
+};
+
+/* ---------- actions ---------- */
+document.addEventListener("click", async e => {
+  const t = e.target.closest("button"); if (!t) return;
+  if (t.dataset.ask !== undefined) { pending = +t.dataset.ask; render(RUN); return; }
+  if (t.dataset.cancel !== undefined) { pending = null; render(RUN); return; }
+  if (t.dataset.approve !== undefined) {
+    const x = RUN.exceptions[+t.dataset.approve];
+    t.disabled = true; t.innerHTML = `<span class="spin"></span> Writing…`;
+    const res = await api("/api/approve", { run_id: RUN.run_id, transaction_ids: [x.transaction_id],
+      account_code: x.proposed_fix.account_code, tax_rate_code: x.proposed_fix.tax_rate_code });
+    pending = null;
+    if (res.error) { toast(res.error, true); render(RUN); return; }
+    const st = (res.new_status || {})[x.transaction_id];
+    toast(st && !String(st).startsWith("rejected") ? `${x.name}: ${st} ✓` : `Not approved: ${st || "no result"}`, !(st && !String(st).startsWith("rejected")));
+    loadRun(RUN.run_id);
+  }
+  if (t.dataset.skip !== undefined) {
+    await api("/api/skip", { run_id: RUN.run_id, transaction_id: RUN.exceptions[+t.dataset.skip].transaction_id });
+    loadRun(RUN.run_id);
+  }
+  if (t.dataset.copyq !== undefined) { navigator.clipboard.writeText(RUN.exceptions[+t.dataset.copyq].question_for_team); toast("Message copied"); }
+});
+$("copyUpd").onclick = () => {
+  const u = RUN.update;
+  navigator.clipboard.writeText(u.headline + "\n\n" + u.sections.map(s => s.title + "\n" + s.body_filled).join("\n\n"));
+  toast("Investor update copied");
+};
+
+(async () => {
+  const d = await api("/api/default_month"); $("month").value = d.month;
+  await loadRuns();
+  const opts = $("replay").options;
+  if (opts.length > 1) { $("replay").value = opts[1].value; loadRun(opts[1].value); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+# saved runs contain raw Seapoint responses; only the demo run is committed
+boardready/runs/*
+!boardready/runs/demo/
